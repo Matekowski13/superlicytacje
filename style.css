@@ -34,12 +34,10 @@ h2 {
     margin-top: 30px;
 }
 
-/* Ukrywanie sekcji */
 .hidden {
     display: none;
 }
 
-/* Style dla konfiguracji graczy */
 .setup-box {
     display: flex;
     justify-content: center;
@@ -79,7 +77,6 @@ h2 {
     background-color: #229954;
 }
 
-/* Tablica wyników i karty graczy */
 #scoreboard-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -89,7 +86,7 @@ h2 {
 .player-card {
     color: white;
     padding: 15px 20px;
-    border-radius: 50px; /* Owalne krawędzie */
+    border-radius: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,29 +127,42 @@ h2 {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-
-/* Pozostałe style (bez zmian) */
 .buttons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
+
+/* ZMODYFIKOWANE STYLE PRZYCISKÓW KATEGORII */
 .category-btn {
-    padding: 15px 20px;
+    padding: 20px 15px; /* Zwiększony padding dla lepszego wyglądu */
     font-size: 1em;
     font-weight: 700;
     color: #fff;
     background-color: #3498db;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px; /* Zwiększony promień dla nowocześniejszego wyglądu */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    
+    /* NOWE STYLE DLA UKŁADU IKONY I TEKSTU */
+    display: flex;
+    flex-direction: column; /* Ustawienie elementów w pionie */
+    align-items: center;   /* Wyśrodkowanie w poziomie */
+    justify-content: center; /* Wyśrodkowanie w pionie */
+    gap: 10px; /* Odstęp między ikoną a tekstem */
 }
 .category-btn:hover {
     background-color: #2980b9;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
+/* NOWE STYLE DLA SAMEJ IKONY */
+.category-btn i {
+    font-size: 2.5em; /* Zwiększenie rozmiaru ikony */
+    line-height: 1; /* Poprawka wyrównania */
+}
+
 #question-box {
     margin-top: 20px;
     padding: 30px;
