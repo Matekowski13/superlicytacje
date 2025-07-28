@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Pytań Quizowych</title>
+    <title>Kto da więcej!</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -11,26 +11,50 @@
 
     <div class="container">
         <header>
-            <h1>Generator Pytań do Gry</h1>
+            <h1>Kto da więcej!</h1>
         </header>
 
         <main>
             <section id="player-setup">
                 <h2>Konfiguracja gry</h2>
-                <div class="setup-box">
-                    <label for="player-count">Podaj liczbę graczy:</label>
-                    <input type="number" id="player-count" min="1" max="10" value="2">
-                    <button id="setup-players-btn">Ustaw graczy</button>
+                <div class="setup-grid">
+                    <div>
+                        <label for="player-count">Liczba graczy:</label>
+                        <input type="number" id="player-count" min="1" max="10" value="2">
+                    </div>
+                    <div>
+                        <label for="target-score">Graj do punktów:</label>
+                        <input type="number" id="target-score" min="1" max="100" value="10">
+                    </div>
                 </div>
+                <button id="setup-players-btn">Ustaw graczy</button>
                 <div id="player-names-container"></div>
             </section>
 
             <section id="scoreboard-section" class="hidden">
-                 <h2>Tablica wyników</h2>
-                 <div id="scoreboard-container"></div>
+                 <h2>Ranking</h2>
+                 <table id="scoreboard-table">
+                     <thead>
+                         <tr>
+                             <th>#</th>
+                             <th>Gracz</th>
+                             <th>Punkty</th>
+                             <th>Akcje</th>
+                         </tr>
+                     </thead>
+                     <tbody id="scoreboard-body">
+                         </tbody>
+                 </table>
             </section>
 
             <section id="quiz-section" class="hidden">
+                <div id="question-box">
+                    <p id="question-text">Rozpocznij grę, wybierając kategorię poniżej...</p>
+                    <button id="skip-question-btn" class="hidden"><i class="fas fa-forward"></i> Pomiń</button>
+                </div>
+            </section>
+            
+            <section id="category-section" class="hidden">
                 <h2>Wybierz kategorię:</h2>
                 <div class="buttons-grid">
                     <button class="category-btn" data-category="wszystko"><i class="fas fa-infinity"></i>Wszystko</button>
@@ -48,15 +72,17 @@
                     <button class="category-btn" data-category="zabawne"><i class="fas fa-laugh-beam"></i>Zabawne</button>
                     <button class="category-btn" data-category="plus_18"><i class="fas fa-fire"></i>+18</button>
                 </div>
-                <div id="question-box">
-                    <p id="question-text">Tutaj pojawi się Twoje pytanie...</p>
-                </div>
             </section>
         </main>
+    </div>
 
-        <footer>
-            <p>Stworzone na podstawie Twojego pomysłu! Miłej zabawy!</p>
-        </footer>
+    <div id="summary-overlay" class="hidden">
+        <div id="summary-box">
+            <h2 id="summary-title">Koniec Gry!</h2>
+            <div id="summary-winner"></div>
+            <div id="summary-details"></div>
+            <button id="play-again-btn">Zagraj jeszcze raz</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
