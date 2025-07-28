@@ -1,58 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --light-gray: #ecf0f1;
+    --dark-gray: #7f8c8d;
+    --background-color: #f0f2f5;
+    --white: #ffffff;
+    --green: #27ae60;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
     margin: 0;
     padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
 }
 
 .container {
-    background-color: #ffffff;
+    background-color: var(--white);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 100%;
+    margin: 20px auto;
     text-align: center;
 }
 
 header h1 {
-    color: #2c3e50;
-    margin-bottom: 10px;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-size: 2.5em;
 }
 
 h2 {
     color: #34495e;
-    border-bottom: 2px solid #ecf0f1;
+    border-bottom: 2px solid var(--light-gray);
     padding-bottom: 10px;
     margin-top: 30px;
+    margin-bottom: 20px;
 }
 
-.hidden {
-    display: none;
-}
+.hidden { display: none !important; }
 
-.setup-box {
+/* Sekcja konfiguracji */
+.setup-grid {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin: 20px 0;
+    gap: 30px;
+    margin-bottom: 20px;
 }
-.setup-box input[type="number"] {
+.setup-grid label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.setup-grid input[type="number"] {
     padding: 10px;
     border: 2px solid #bdc3c7;
     border-radius: 8px;
-    width: 60px;
+    width: 80px;
     text-align: center;
     font-size: 1em;
 }
+#player-names-container { margin-top: 20px; }
 #player-names-container input {
     display: block;
     margin: 10px auto;
@@ -63,11 +76,11 @@ h2 {
     border-radius: 8px;
 }
 #setup-players-btn, #start-game-btn {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 1em;
     font-weight: 700;
-    color: #fff;
-    background-color: #27ae60;
+    color: var(--white);
+    background-color: var(--green);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -77,110 +90,181 @@ h2 {
     background-color: #229954;
 }
 
-#scoreboard-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+/* Nowe style dla tabeli rankingu */
+#scoreboard-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
+    font-size: 1.1em;
 }
-.player-card {
-    color: white;
-    padding: 15px 20px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
+#scoreboard-table th, #scoreboard-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
 }
-.player-card:hover {
-    transform: scale(1.03);
+#scoreboard-table th {
+    background-color: var(--light-gray);
+    font-weight: 700;
 }
-.player-name {
+#scoreboard-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+#scoreboard-table td:first-child {
+    font-weight: 700;
+    text-align: center;
+    border-left: 5px solid transparent;
+}
+#scoreboard-table td:nth-child(3) {
     font-weight: 700;
     font-size: 1.2em;
+    text-align: center;
 }
-.score-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.score {
-    font-size: 1.5em;
-    font-weight: 700;
-    min-width: 40px;
+#scoreboard-table td:last-child {
     text-align: center;
 }
 .score-btn {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     border: none;
-    background-color: rgba(255, 255, 255, 0.3);
     color: white;
     font-size: 1.2em;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin: 0 5px;
 }
-.score-btn:hover {
-    background-color: rgba(255, 255, 255, 0.5);
+.plus { background-color: var(--green); }
+.minus { background-color: #e74c3c; }
+.plus:hover { background-color: #229954; }
+.minus:hover { background-color: #c0392b; }
+
+/* Pole pytania i przycisk Pomiń */
+#question-box {
+    margin-top: 20px;
+    padding: 25px;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+#question-text {
+    font-size: 1.3em;
+    color: var(--secondary-color);
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+    flex-grow: 1;
+}
+#skip-question-btn {
+    padding: 10px 15px;
+    font-size: 0.9em;
+    font-weight: 700;
+    color: var(--secondary-color);
+    background-color: #bdc3c7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-shrink: 0;
+}
+#skip-question-btn:hover {
+    background-color: var(--dark-gray);
+    color: var(--white);
 }
 
+/* Przyciski kategorii */
 .buttons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
-
-/* ZMODYFIKOWANE STYLE PRZYCISKÓW KATEGORII */
 .category-btn {
-    padding: 20px 15px; /* Zwiększony padding dla lepszego wyglądu */
-    font-size: 1em;
+    padding: 15px;
+    font-size: 0.9em;
     font-weight: 700;
-    color: #fff;
-    background-color: #3498db;
+    color: var(--white);
+    background-color: var(--primary-color);
     border: none;
-    border-radius: 12px; /* Zwiększony promień dla nowocześniejszego wyglądu */
+    border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    
-    /* NOWE STYLE DLA UKŁADU IKONY I TEKSTU */
     display: flex;
-    flex-direction: column; /* Ustawienie elementów w pionie */
-    align-items: center;   /* Wyśrodkowanie w poziomie */
-    justify-content: center; /* Wyśrodkowanie w pionie */
-    gap: 10px; /* Odstęp między ikoną a tekstem */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 100px;
 }
 .category-btn:hover {
     background-color: #2980b9;
     transform: translateY(-3px);
 }
-/* NOWE STYLE DLA SAMEJ IKONY */
 .category-btn i {
-    font-size: 2.5em; /* Zwiększenie rozmiaru ikony */
-    line-height: 1; /* Poprawka wyrównania */
+    font-size: 2em;
+    line-height: 1;
 }
 
-#question-box {
-    margin-top: 20px;
-    padding: 30px;
-    background-color: #ecf0f1;
-    border-radius: 8px;
-    min-height: 80px;
+/* Ekran podsumowania */
+#summary-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
-#question-text {
-    font-size: 1.4em;
-    color: #2c3e50;
+#summary-box {
+    background-color: var(--white);
+    padding: 30px 40px;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+}
+#summary-winner {
+    font-size: 1.5em;
     font-weight: 700;
-    margin: 0;
+    margin: 15px 0;
 }
-footer {
-    margin-top: 40px;
-    font-size: 0.9em;
-    color: #95a5a6;
+#summary-details {
+    text-align: left;
+    margin-top: 20px;
+}
+#summary-details h3 {
+    margin-top: 20px;
+    border-bottom: 1px solid var(--light-gray);
+    padding-bottom: 5px;
+}
+#summary-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+#summary-details li {
+    padding: 5px 0;
+}
+#play-again-btn {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s;
+}
+#play-again-btn:hover {
+    background-color: #229954;
 }
