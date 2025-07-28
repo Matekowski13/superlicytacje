@@ -11,11 +11,25 @@
     <div class="container">
         <header>
             <h1>Generator Pytań do Gry</h1>
-            <p>Wybierz kategorię, a następnie postaraj się wymienić jak najwięcej odpowiedzi na wylosowane pytanie!</p>
         </header>
 
         <main>
-            <section id="category-selector">
+            <section id="player-setup">
+                <h2>Konfiguracja gry</h2>
+                <div class="setup-box">
+                    <label for="player-count">Podaj liczbę graczy:</label>
+                    <input type="number" id="player-count" min="1" max="10" value="2">
+                    <button id="setup-players-btn">Ustaw graczy</button>
+                </div>
+                <div id="player-names-container"></div>
+            </section>
+
+            <section id="scoreboard-section" class="hidden">
+                 <h2>Tablica wyników</h2>
+                 <div id="scoreboard-container"></div>
+            </section>
+
+            <section id="quiz-section" class="hidden">
                 <h2>Wybierz kategorię:</h2>
                 <div class="buttons-grid">
                     <button class="category-btn" data-category="wszystko">Wszystko</button>
@@ -25,10 +39,6 @@
                     <button class="category-btn" data-category="dla_kobiet">Dla Kobiet</button>
                     <button class="category-btn" data-category="polityka">Polityka</button>
                 </div>
-            </section>
-
-            <section id="question-display">
-                <h2>Wylosowane pytanie:</h2>
                 <div id="question-box">
                     <p id="question-text">Tutaj pojawi się Twoje pytanie...</p>
                 </div>
