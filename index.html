@@ -39,7 +39,6 @@
                              <th>#</th>
                              <th>Gracz</th>
                              <th>Punkty</th>
-                             <th>Akcje</th>
                          </tr>
                      </thead>
                      <tbody id="scoreboard-body">
@@ -50,7 +49,16 @@
             <section id="quiz-section" class="hidden">
                 <div id="question-box">
                     <p id="question-text">Rozpocznij grę, wybierając kategorię poniżej...</p>
-                    <button id="skip-question-btn" class="hidden"><i class="fas fa-forward"></i> Pomiń</button>
+                    <div id="question-actions" class="hidden">
+                        <select id="player-selector">
+                            <option value="">Wybierz gracza...</option>
+                        </select>
+                        <div id="answer-buttons" class="hidden">
+                            <button id="correct-answer-btn" class="action-btn plus"><i class="fas fa-thumbs-up"></i></button>
+                            <button id="incorrect-answer-btn" class="action-btn minus"><i class="fas fa-thumbs-down"></i></button>
+                        </div>
+                    </div>
+                    <button id="skip-question-btn"><i class="fas fa-forward"></i> Pomiń</button>
                 </div>
             </section>
             
