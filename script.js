@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Baza pytań (bez zmian)
     const bazaPytan = {
         geografia: ["Wymień stolice państw w Europie.", "Wymień państwa, które mają dostęp do Morza Śródziemnego.", "Podaj nazwy państw leżących w Ameryce Południowej.", "Wymień znane pasma górskie na świecie.", "Wymień największe miasta w Polsce pod względem liczby ludności.", "Wymień stany wchodzące w skład Stanów Zjednoczonych Ameryki.", "Podaj nazwy państw, przez które przepływa rzeka Ren.", "Wymień wyspy należące do Hiszpanii.", "Wymień kraje, które nie mają dostępu do morza (tzw. kraje śródlądowe).", "Podaj nazwy pustyń na świecie.", "Wymień kraje graniczące z Polską.", "Podaj nazwy co najmniej 15 parków narodowych w Polsce.", "Wymień morza i oceany świata.", "Podaj nazwy państw leżących na kontynencie azjatyckim.", "Wymień znane wulkany, czynne lub wygasłe."],
         pilka_nozna: ["Wymień kluby, które kiedykolwiek zdobyły Puchar Europy / Ligę Mistrzów.", "Podaj nazwiska piłkarzy, którzy zdobyli nagrodę Złotej Piłki (Ballon d'Or).", "Wymień kluby, które obecnie grają w polskiej Ekstraklasie.", "Wymień kraje należące do federacji piłkarskiej UEFA.", "Wymień reprezentacje, które brały udział w Mistrzostwach Świata w 2022 roku.", "Wymień piłkarzy, którzy strzelili co najmniej 100 goli w angielskiej Premier League.", "Podaj nazwiska piłkarzy z kadry reprezentacji Polski na Mistrzostwach Świata w 1974 roku.", "Wymień piłkarzy, którzy w swojej karierze grali zarówno dla Realu Madryt, jak i FC Barcelony.", "Wymień kluby, w których w swojej seniorskiej karierze grał Zlatan Ibrahimović.", "Wymień drużyny, które zdobyły mistrzostwo Włoch (Scudetto) w XXI wieku.", "Wymień polskich piłkarzy, którzy zagrali w fazie grupowej Ligi Mistrzów (grając w zagranicznym klubie).", "Podaj nazwy stadionów piłkarskich w Anglii o pojemności powyżej 40 000.", "Wymień kraje, które kiedykolwiek gościły finały Mistrzostw Świata w piłce nożnej.", "Wymień zwycięzców Mistrzostw Europy (EURO).", "Podaj nazwiska trenerów, którzy wygrywali Ligę Mistrzów.", "Wymień kluby piłkarskie z Londynu.", "Wymień słynne derby piłkarskie z całego świata.", "Podaj nazwiska piłkarzy, którzy nosili numer 10 w słynnych klubach lub reprezentacjach.", "Wymień reprezentacje, które wygrały Copa América.", "Wymień terminy związane z taktyką piłkarską (np. pressing, tiki-taka)."],
@@ -16,9 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         plus_18: ["Wymień powody, dla których ludzie zdradzają swoich partnerów.", "Podaj slangowe określenia na męskie lub żeńskie organy płciowe.", "Wymień znane fetysze seksualne.", "Podaj nazwy popularnych kategorii filmów na stronach dla dorosłych.", "Wymień rzeczy, które są legalne, ale przez wielu uważane za niemoralne.", "Wymień znanych seryjnych morderców, prawdziwych lub fikcyjnych.", "Podaj 'czerwone flagi' (sygnały ostrzegawcze) w nowej relacji.", "Wymień sposoby na pozbycie się zwłok, które widziałeś w filmach lub serialach.", "Wymień rzeczy, które zrobiłbyś, gdyby na jeden dzień zniknęły wszelkie konsekwencje prawne i społeczne.", "Podaj nazwy substancji psychoaktywnych, legalnych lub nielegalnych.", "Wymień najgorsze teksty na podryw, jakie słyszałeś.", "Wymień argumenty używane przez zwolenników lub przeciwników aborcji.", "Wymień najdziwniejsze miejsca, w których ludzie uprawiają seks.", "Wymień teorie spiskowe, w które wierzą ludzie.", "Podaj przykłady 'brudnych', niespełnionych fantazji seksualnych."]
     };
 
-    // --- NOWA, PRZEBUDOWANA LOGIKA GRY ---
-
-    // Selektory elementów
+    // --- ZMIENIONA LOGIKA GRY ---
     const playerCountInput = document.getElementById('player-count');
     const targetScoreInput = document.getElementById('target-score');
     const setupPlayersBtn = document.getElementById('setup-players-btn');
@@ -26,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreboardBody = document.getElementById('scoreboard-body');
     const polePytania = document.getElementById('question-text');
     const skipQuestionBtn = document.getElementById('skip-question-btn');
+    const questionActions = document.getElementById('question-actions');
+    const playerSelector = document.getElementById('player-selector');
+    const answerButtons = document.getElementById('answer-buttons');
+    const correctAnswerBtn = document.getElementById('correct-answer-btn');
+    const incorrectAnswerBtn = document.getElementById('incorrect-answer-btn');
     
     const playerSetupSection = document.getElementById('player-setup');
     const scoreboardSection = document.getElementById('scoreboard-section');
@@ -33,15 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const categorySection = document.getElementById('category-section');
     const summaryOverlay = document.getElementById('summary-overlay');
 
-    // Stan gry
     let players = [];
     let targetScore = 10;
-    let currentQuestion = "";
+    let currentQuestion = "Rozpocznij grę, wybierając kategorię poniżej...";
+    let selectedPlayerId = null;
     const playerColors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f', '#9b59b6', '#e67e22', '#1abc9c', '#34495e', '#d35400', '#c0392b'];
 
-    // --- ETAPY GRY ---
-
-    // 1. Ustawianie graczy
     setupPlayersBtn.addEventListener('click', () => {
         playerNamesContainer.innerHTML = '';
         const count = parseInt(playerCountInput.value);
@@ -61,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Rozpoczęcie gry
     function startGame() {
         targetScore = parseInt(targetScoreInput.value);
         const nameInputs = document.querySelectorAll('.player-name-input');
@@ -72,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: input.value || `Gracz ${index + 1}`,
                 score: 0,
                 color: playerColors[index % playerColors.length],
-                answeredQuestions: [] // Historia odpowiedzi
+                history: []
             });
         });
 
@@ -80,14 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreboardSection.classList.remove('hidden');
         quizSection.classList.remove('hidden');
         categorySection.classList.remove('hidden');
-        skipQuestionBtn.classList.remove('hidden');
+        polePytania.textContent = currentQuestion;
         
         renderScoreboard();
     }
 
-    // 3. Renderowanie tabeli z rankingiem
     function renderScoreboard() {
-        // Sortowanie graczy po punktach
         players.sort((a, b) => b.score - a.score);
         
         scoreboardBody.innerHTML = '';
@@ -97,16 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td style="border-left-color: ${player.color};">${index + 1}</td>
                 <td>${player.name}</td>
                 <td>${player.score}</td>
-                <td>
-                    <button class="score-btn plus" data-id="${player.id}">+</button>
-                    <button class="score-btn minus" data-id="${player.id}">-</button>
-                </td>
             `;
             scoreboardBody.appendChild(row);
         });
     }
 
-    // 4. Losowanie pytania
     function drawQuestion(kategoria) {
         let pulaPytan;
         if (kategoria === 'wszystko') {
@@ -117,51 +108,72 @@ document.addEventListener('DOMContentLoaded', () => {
         const losowyIndex = Math.floor(Math.random() * pulaPytan.length);
         currentQuestion = pulaPytan[losowyIndex];
         polePytania.textContent = currentQuestion;
+
+        updatePlayerSelector();
+        questionActions.classList.remove('hidden');
+        answerButtons.classList.add('hidden');
     }
 
-    // --- OBSŁUGA ZDARZEŃ W TRAKCIE GRY ---
-
-    // Kliknięcie w kategorię
-    document.querySelectorAll('.category-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            drawQuestion(button.dataset.category);
+    function updatePlayerSelector() {
+        playerSelector.innerHTML = '<option value="">Wybierz gracza...</option>';
+        players.forEach(player => {
+            const option = document.createElement('option');
+            option.value = player.id;
+            option.textContent = player.name;
+            playerSelector.appendChild(option);
         });
+    }
+
+    function handleAnswer(isCorrect) {
+        if (selectedPlayerId === null) return;
+
+        const player = players.find(p => p.id === selectedPlayerId);
+        if (isCorrect) {
+            player.score++;
+            player.history.push({ question: currentQuestion, correct: true });
+        } else {
+            player.score--;
+            player.history.push({ question: currentQuestion, correct: false });
+        }
+
+        renderScoreboard();
+        
+        // Reset UI i losuj kolejne pytanie
+        questionActions.classList.add('hidden');
+        selectedPlayerId = null;
+        drawQuestion('wszystko');
+
+        // Sprawdź warunek zwycięstwa po wszystkich akcjach
+        checkWinCondition(player);
+    }
+    
+    // --- OBSŁUGA ZDARZEŃ ---
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.addEventListener('click', () => drawQuestion(button.dataset.category));
     });
 
-    // Przycisk "Pomiń"
     skipQuestionBtn.addEventListener('click', () => drawQuestion('wszystko'));
     
-    // Przyciski +/- punktów
-    scoreboardBody.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.classList.contains('score-btn')) {
-            const playerId = parseInt(target.dataset.id);
-            const player = players.find(p => p.id === playerId);
-
-            if (target.classList.contains('plus')) {
-                player.score++;
-                if (currentQuestion) {
-                    player.answeredQuestions.push(currentQuestion);
-                }
-            } else if (target.classList.contains('minus')) {
-                player.score--;
-            }
-            
-            renderScoreboard();
-            checkWinCondition(player);
+    playerSelector.addEventListener('change', (e) => {
+        if (e.target.value) {
+            selectedPlayerId = parseInt(e.target.value);
+            answerButtons.classList.remove('hidden');
+        } else {
+            selectedPlayerId = null;
+            answerButtons.classList.add('hidden');
         }
     });
+
+    correctAnswerBtn.addEventListener('click', () => handleAnswer(true));
+    incorrectAnswerBtn.addEventListener('click', () => handleAnswer(false));
     
     // --- ZAKOŃCZENIE GRY ---
-
-    // 5. Sprawdzenie warunku zwycięstwa
     function checkWinCondition(player) {
         if (player.score >= targetScore) {
             showGameSummary(player);
         }
     }
 
-    // 6. Wyświetlenie podsumowania
     function showGameSummary(winner) {
         document.getElementById('summary-winner').innerHTML = `Wygrywa <strong>${winner.name}</strong>, zdobywając ${winner.score} punktów!`;
         
@@ -171,23 +183,24 @@ document.addEventListener('DOMContentLoaded', () => {
         players.forEach(player => {
             const playerDiv = document.createElement('div');
             let questionsHTML = '<ul>';
-            if (player.answeredQuestions.length > 0) {
-                player.answeredQuestions.forEach(q => {
-                    questionsHTML += `<li>${q}</li>`;
+            if (player.history.length > 0) {
+                player.history.forEach(item => {
+                    const liClass = item.correct ? 'correct-answer' : 'incorrect-answer';
+                    const icon = item.correct ? '<i class="fas fa-check"></i> ' : '<i class="fas fa-times"></i> ';
+                    questionsHTML += `<li class="${liClass}">${icon}${item.question}</li>`;
                 });
             } else {
-                questionsHTML += '<li><i>Brak odpowiedzi</i></li>';
+                questionsHTML += '<li><i>Brak zarejestrowanych odpowiedzi.</i></li>';
             }
             questionsHTML += '</ul>';
 
-            playerDiv.innerHTML = `<h3>${player.name} (${player.score} pkt) - Odpowiedzi:</h3>${questionsHTML}`;
+            playerDiv.innerHTML = `<h3>${player.name} (${player.score} pkt) - Historia:</h3>${questionsHTML}`;
             detailsContainer.appendChild(playerDiv);
         });
 
         summaryOverlay.classList.remove('hidden');
     }
 
-    // Przycisk "Zagraj jeszcze raz"
     document.getElementById('play-again-btn').addEventListener('click', () => {
         location.reload();
     });
