@@ -8,6 +8,7 @@
     --background-color: #f0f2f5;
     --white: #ffffff;
     --green: #27ae60;
+    --red: #e74c3c;
 }
 
 body {
@@ -90,7 +91,7 @@ h2 {
     background-color: #229954;
 }
 
-/* Nowe style dla tabeli rankingu */
+/* Tabela rankingu */
 #scoreboard-table {
     width: 100%;
     border-collapse: collapse;
@@ -106,6 +107,9 @@ h2 {
     background-color: var(--light-gray);
     font-weight: 700;
 }
+#scoreboard-table th:last-child, #scoreboard-table td:last-child {
+    text-align: center;
+}
 #scoreboard-table tr:nth-child(even) {
     background-color: #f8f9fa;
 }
@@ -114,39 +118,19 @@ h2 {
     text-align: center;
     border-left: 5px solid transparent;
 }
-#scoreboard-table td:nth-child(3) {
-    font-weight: 700;
-    font-size: 1.2em;
-    text-align: center;
-}
 #scoreboard-table td:last-child {
-    text-align: center;
-}
-.score-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: none;
-    color: white;
-    font-size: 1.2em;
     font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin: 0 5px;
+    font-size: 1.2em;
 }
-.plus { background-color: var(--green); }
-.minus { background-color: #e74c3c; }
-.plus:hover { background-color: #229954; }
-.minus:hover { background-color: #c0392b; }
 
-/* Pole pytania i przycisk Pomiń */
+/* Pole pytania i nowe akcje */
 #question-box {
     margin-top: 20px;
     padding: 25px;
     background-color: var(--light-gray);
     border-radius: 8px;
-    min-height: 70px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
@@ -159,6 +143,30 @@ h2 {
     text-align: left;
     flex-grow: 1;
 }
+#question-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#player-selector {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #bdc3c7;
+    background-color: var(--white);
+}
+.action-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.action-btn:hover {
+    transform: scale(1.1);
+}
 #skip-question-btn {
     padding: 10px 15px;
     font-size: 0.9em;
@@ -169,7 +177,6 @@ h2 {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
-    flex-shrink: 0;
 }
 #skip-question-btn:hover {
     background-color: var(--dark-gray);
@@ -252,6 +259,7 @@ h2 {
 }
 #summary-details li {
     padding: 5px 0;
+    font-weight: 600;
 }
 #play-again-btn {
     margin-top: 30px;
@@ -268,3 +276,8 @@ h2 {
 #play-again-btn:hover {
     background-color: #229954;
 }
+
+.correct-answer { color: var(--green); }
+.incorrect-answer { color: var(--red); }
+.plus { background-color: var(--green); }
+.minus { background-color: var(--red); }
