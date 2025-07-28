@@ -8,7 +8,7 @@ body {
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -27,11 +27,6 @@ header h1 {
     margin-bottom: 10px;
 }
 
-header p {
-    color: #7f8c8d;
-    font-size: 1.1em;
-}
-
 h2 {
     color: #34495e;
     border-bottom: 2px solid #ecf0f1;
@@ -39,13 +34,110 @@ h2 {
     margin-top: 30px;
 }
 
+/* Ukrywanie sekcji */
+.hidden {
+    display: none;
+}
+
+/* Style dla konfiguracji graczy */
+.setup-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+.setup-box input[type="number"] {
+    padding: 10px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    width: 60px;
+    text-align: center;
+    font-size: 1em;
+}
+#player-names-container input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+}
+#setup-players-btn, #start-game-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    background-color: #27ae60;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#setup-players-btn:hover, #start-game-btn:hover {
+    background-color: #229954;
+}
+
+/* Tablica wyników i karty graczy */
+#scoreboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+.player-card {
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px; /* Owalne krawędzie */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+.player-card:hover {
+    transform: scale(1.03);
+}
+.player-name {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+.score-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.score {
+    font-size: 1.5em;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: center;
+}
+.score-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.score-btn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* Pozostałe style (bez zmian) */
 .buttons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     margin-top: 20px;
 }
-
 .category-btn {
     padding: 15px 20px;
     font-size: 1em;
@@ -57,16 +149,10 @@ h2 {
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
 .category-btn:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
 }
-
-.category-btn:active {
-    transform: translateY(0);
-}
-
 #question-box {
     margin-top: 20px;
     padding: 30px;
@@ -77,14 +163,12 @@ h2 {
     justify-content: center;
     align-items: center;
 }
-
 #question-text {
     font-size: 1.4em;
     color: #2c3e50;
     font-weight: 700;
     margin: 0;
 }
-
 footer {
     margin-top: 40px;
     font-size: 0.9em;
